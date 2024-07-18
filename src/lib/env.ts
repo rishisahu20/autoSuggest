@@ -8,6 +8,7 @@ import { z } from 'zod';
 
 const envVariables = z.object({
   NEXT_PUBLIC_SHOW_LOGGER: z.enum(['true', 'false']).optional(),
+  NEXT_PUBLIC_API_BASE_URL: z.string().optional()
 });
 
 envVariables.parse(process.env);

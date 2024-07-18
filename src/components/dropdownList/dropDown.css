@@ -1,0 +1,19 @@
+ul.dropdown-list {
+  border-radius: 8px;
+  padding: 10px 0px;
+  max-height: 190px;
+  overflow-y: scroll;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin: 4px;
+}
+
+ul.dropdown-list .dropdown-item {
+  list-style-type: none;
+  padding: 10px 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+ul.dropdown-list .dropdown-item:hover {
+  background-color: #5cace4;
+}

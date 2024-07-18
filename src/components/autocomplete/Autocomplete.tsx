@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
-import { useDebouncedCallback } from '../../hooks/useDebouncedCallback';
-import SuggestionComp from './SuggestionComp';
+import { useDebouncedCallback } from '@/hooks/useDebouncedCallback';
 import api from '@/utils/api';
-import DropdownList from '@/components/autocomplete/component/DropDownList';
-
-interface Country {
-  name: string;
-  region: string;
-  latlng: [number, number];
-  callingCodes: string[];
-}
+import DropdownList from '@/components/dropdownList/DropdownList';
+import { Country } from '@/components/types';
+import './autoComplete.css';
 
 function AutoComplete() {
   const [suggestions, setSuggestions] = useState<Country[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
-  const [userInput, setUserInput] = useState<string>('');,
+  const [userInput, setUserInput] = useState<string>('');
 
   const debounceOnChangeAsync = useDebouncedCallback((text: string) => {
     loadOptions(text);
@@ -29,11 +22,11 @@ function AutoComplete() {
       const response = await api.get<Country[]>(`api/countries/${text}`);
       setSuggestions(response.data);
       setLoading(false);
-      setShowSuggestions(true);
       setError(false);
     } catch (error) {
       setError(true);
       setLoading(false);
+      emptyAndHideList();
     }
   };
 
@@ -43,17 +36,20 @@ function AutoComplete() {
     if (userInputVal.length > 0) {
       debounceOnChangeAsync(userInputVal);
     } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
+      emptyAndHideList();
     }
   };
 
-  const onItemClick = (country:Country): void => {
-    setUserInput(country.name)
-  }
+  const onItemClick = (country: Country): void => {
+    setUserInput(country.name);
+  };
+
+  const emptyAndHideList = () => {
+    setSuggestions([]);
+  };
 
   return (
-    <div className='main-wrapper'>
+    <div className='auto-complete-wrapper'>
       <input
         type='search'
         onChange={handleChange}
@@ -61,14 +57,15 @@ function AutoComplete() {
         placeholder='Search...'
         className='custom-input-style'
       />
-      {showSuggestions && (
-        <ul>
-          {suggestions.map((country: Country, index: number) => (
-            <li key={index}>{country.name}</li>
-          ))}
-        </ul>
+      {loading && <p className='loading-text'>...loading</p>}
+      {suggestions?.length > 0 && (
+        <DropdownList
+          onItemClick={onItemClick}
+          suggestions={suggestions}
+          emptyAndHideList={emptyAndHideList}
+        />
       )}
-   <DropdownList onItemClick={onItemClick} suggestions={suggestions}/>
+      {error && <p className='error-message'>something went wrrongs</p>}
     </div>
   );
 }

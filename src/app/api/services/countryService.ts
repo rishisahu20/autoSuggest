@@ -1,6 +1,7 @@
 import axios from 'axios';
 import haversine from 'haversine-distance';
 import { countries, ICountry } from '@/app/api/data/data';
+import { latLongApiEndpoint } from '@/constant/env';
 
 interface QueryParams {
   lat: number | null;
@@ -29,9 +30,8 @@ export const getClosestCountries = async (
   countryName: string,
   queryObject: QueryParams
 ): Promise<ICountry[]> => {
-  console.log('countryName', countryName, queryObject);
   if (!(queryObject.lat && queryObject.long)) {
-    const response = await axios.get('http://ip-api.com/json?fields=lat,lon');
+    const response = await axios.get(latLongApiEndpoint);
     const data = response.data;
     queryObject.lat = data.lat;
     queryObject.long = data.lon;
@@ -50,14 +50,11 @@ export const getClosestCountries = async (
     country.name.toLowerCase().startsWith(countryName.toLowerCase())
   );
 
-  console.log('filteredCountries', filteredCountries);
-
   const filteredLimitedCountries = filteredCountries.slice(
     0,
     queryObject.limit ? queryObject.limit : 10
   );
 
-  console.log('filteredLimitedCountries', filteredLimitedCountries);
 
   const mappedFilteredLimitedCountries = filteredLimitedCountries.map(
     (country) => ({
@@ -68,13 +65,5 @@ export const getClosestCountries = async (
     })
   );
 
-  console.log('mapped', mappedFilteredLimitedCountries);
   return mappedFilteredLimitedCountries;
 };
-
-// return limitedCountries.map((country) => ({
-//   name: country.name,
-//   region: country.region,
-//   latlng: country.latlng,
-//   callingCodes: country.callingCodes,
-// }));
