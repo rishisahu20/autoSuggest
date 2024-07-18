@@ -16,4 +16,5 @@ ul.dropdown-list .dropdown-item {
 
 ul.dropdown-list .dropdown-item:hover {
   background-color: #5cace4;
+  color: #fff;
 }

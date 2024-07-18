@@ -42,6 +42,7 @@ function AutoComplete() {
 
   const onItemClick = (country: Country): void => {
     setUserInput(country.name);
+    emptyAndHideList();
   };
 
   const emptyAndHideList = () => {
