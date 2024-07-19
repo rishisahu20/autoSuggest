@@ -1,5 +1,5 @@
-import AutoComplete from '@/components/AutoComplete/AutoComplete';
-import ErrorBoundary from '@/components/errorBoundary/ErrorBoundary';
+import AutoComplete from '@/components/autoComplete';
+import ErrorBoundary from '@/components/errorBoundary';
 import '../styles/index.css';
 
 function HomePage() {

@@ -1,4 +1,4 @@
-import joi, { ValidationError } from 'joi';
+import joi from 'joi';
 
 const querySchema = joi.object({
   lat: joi.number().max(90).min(-90).allow(null),
@@ -8,20 +8,15 @@ const querySchema = joi.object({
 
 export const validateQuery = (queryParams: URLSearchParams) => {
   const queryObject = {
-    lat:
-      queryParams.get('lat') !== null ? Number(queryParams.get('lat')) : null,
-    long:
-      queryParams.get('long') !== null ? Number(queryParams.get('long')) : null,
-    limit:
-      queryParams.get('limit') !== null
-        ? Number(queryParams.get('limit'))
-        : null,
+    lat: queryParams.get('lat') !== null ? Number(queryParams.get('lat')) : null,
+    long: queryParams.get('long') !== null ? Number(queryParams.get('long')) : null,
+    limit: queryParams.get('limit') !== null ? Number(queryParams.get('limit')) : null,
   };
 
   const { error } = querySchema.validate(queryObject);
 
   if (error) {
-    throw new ValidationError(error.message);
+    throw error;
   }
 
   return queryObject;

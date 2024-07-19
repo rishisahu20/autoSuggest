@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDebouncedCallback } from '@/hooks/useDebouncedCallback';
 import api from '@/utils/api';
-import DropdownList from '@/components/dropdownList/DropdownList';
+import DropdownList from '@/components/dropdownList';
 import { Country } from '@/components/types';
-import './autoComplete.css';
+import './index.css';
 
-function AutoComplete() {
+const AutoComplete: React.FC = () => {
   const [suggestions, setSuggestions] = useState<Country[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -69,6 +69,6 @@ function AutoComplete() {
       {error && <p className='error-message'>something went wrrongs</p>}
     </div>
   );
-}
+};
 
 export default AutoComplete;

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { DropdownListProps } from '@/components/types';
 import useOutsideClick from '@/hooks/useOutsideClick';
-import './dropdown.css';
+import './index.css';
 
 const DropdownList: React.FC<DropdownListProps> = ({
   suggestions,

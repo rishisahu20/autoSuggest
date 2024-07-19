@@ -65,5 +65,32 @@ export const getClosestCountries = async (
     })
   );
 
-  return mappedFilteredLimitedCountries;
+  return filteredLimitedCountries.map((country) => ({
+    name: country.name,
+    topLevelDomain: country.topLevelDomain || [],
+    alpha2Code: country.alpha2Code || '',
+    alpha3Code: country.alpha3Code || '',
+    callingCodes: country.callingCodes || [],
+    capital: country.capital,
+    altSpellings: country.altSpellings || [],
+    subregion: country.subregion || '',
+    region: country.region || '',
+    gini: country.gini,
+    population: country.population || 0,
+    latlng: country.latlng || [],
+    demonym: country.demonym || '',
+    area: country.area,
+    timezones: country.timezones || [],
+    borders: country.borders || [],
+    nativeName: country.nativeName || '',
+    numericCode: country.numericCode || '',
+    flags: country.flags || { svg: '', png: '' },
+    currencies: country.currencies || [],
+    languages: country.languages || [],
+    translations: country.translations || {},
+    flag: country.flag || '',
+    regionalBlocs: country.regionalBlocs || [],
+    cioc: country.cioc,
+    independent: country.independent || false,
+  }));
 };
